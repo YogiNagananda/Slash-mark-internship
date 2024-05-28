@@ -1,0 +1,109 @@
+Introduction
+This documentation covers the implementation of a simple number guessing game written in Python. The game prompts the user to guess a randomly selected number between 1 and 200 within six attempts. The code includes an introduction function, a main game loop, input validation, and feedback mechanisms to guide the player.
+
+Code Overview
+The program is structured into the following main parts:
+
+Global Variable Initialization
+Function Definitions
+intro()
+pick()
+Main Game Loop
+Global Variable Initialization
+python
+Copy code
+import random
+import time
+
+number = random.randint(1, 200)
+random module: Used to generate a random number between 1 and 200.
+time module: Used to introduce pauses for better user experience.
+Function Definitions
+intro() Function
+python
+Copy code
+def intro():
+    print("May I ask you for your name?")
+    name = input()
+    print(name + ", we are going to play a game. I am thinking of a number between 1 and 200")
+    time.sleep(0.5)
+    print("Go ahead. Guess!")
+Purpose: Introduces the game to the player and collects the player's name.
+Design Choices:
+Asks for the player's name to personalize the game.
+Adds a brief pause (time.sleep(0.5)) to create a better user experience.
+Challenges: Ensuring a smooth user interaction and handling the user's input effectively.
+pick() Function
+python
+Copy code
+def pick():
+    guessesTaken = 0
+    while guessesTaken < 6:
+        time.sleep(0.25)
+        enter = input("Guess: ")
+        try:
+            guess = int(enter)
+            if 1 <= guess <= 200:
+                guessesTaken += 1
+                if guessesTaken < 6:
+                    if guess < number:
+                        print("The guess of the number that you have entered is too low")
+                    if guess > number:
+                        print("The guess of the number that you have entered is too high")
+                    if guess != number:
+                        time.sleep(0.5)
+                        print("Try Again!")
+                if guess == number:
+                    break
+            else:
+                print("Silly Goose! That number isn't in the range!")
+                time.sleep(0.25)
+                print("Please enter a number between 1 and 200")
+        except:
+            print("I don't think that " + enter + " is a number. Sorry")
+    if guess == number:
+        guessesTaken = str(guessesTaken)
+        print('Good job, ' + name + '! You guessed my number in ' + guessesTaken + ' guesses!')
+    else:
+        print('Nope. The number I was thinking of was ' + str(number))
+Purpose: Handles the core logic of the game, including input validation, feedback, and tracking the number of guesses.
+Design Choices:
+Uses a loop to allow up to six guesses.
+Provides feedback if the guess is too high or too low.
+Includes pauses (time.sleep) for a more engaging experience.
+Validates input to ensure it is within the specified range and is a valid integer.
+Challenges:
+Ensuring robust input validation to handle non-numeric and out-of-range inputs.
+Providing clear and helpful feedback to guide the player.
+Main Game Loop
+python
+Copy code
+playagain = "yes"
+while playagain.lower() in ["yes", "y"]:
+    intro()
+    pick()
+    print("Do you want to play again?")
+    playagain = input()
+Purpose: Allows the player to play multiple rounds of the game.
+Design Choices:
+Converts the player's input to lowercase to handle different cases ("Yes", "yes", "y", etc.).
+Calls the intro() and pick() functions for each new game.
+Challenges: Handling the player's input consistently to determine if they want to play again.
+Detailed Explanation of Design Choices
+User Experience: The use of pauses (time.sleep) is designed to make the game feel more interactive and less rushed. The brief pauses give the player time to read the prompts and think about their guesses.
+
+Input Validation: Validating user input is crucial to prevent the game from crashing due to invalid inputs. The try-except block ensures that non-numeric inputs are handled gracefully.
+
+Feedback Mechanisms: Providing immediate and clear feedback if the guess is too high or too low helps guide the player towards the correct number. Encouraging messages like "Try Again!" keep the player engaged.
+
+Replayability: The main game loop allows the player to choose if they want to play again, making the game more flexible and enjoyable.
+
+Challenges and Solutions
+Input Validation: Ensuring that the program handles non-numeric and out-of-range inputs without crashing was a primary challenge. The solution was to use a try-except block and range checks.
+User Engagement: Keeping the player engaged through pauses and encouraging feedback was essential. Balancing the amount of feedback without overwhelming the player was a key consideration.
+This documentation covers the key aspects of the number guessing game code, providing an overview of its functionality, design choices, and the challenges encountered during implementation.
+
+
+
+
+

@@ -1,0 +1,124 @@
+Introduction
+This documentation covers the implementation of a simple to-do list application written in Python. The application allows users to add tasks, display the current to-do list, mark tasks as completed, and remove tasks from the list. The program operates through a command-line interface, offering a menu for user interactions.
+
+Code Overview
+The program is structured into the following main parts:
+
+Global Variable Initialization
+Function Definitions
+display_tasks()
+add_task()
+mark_completed()
+remove_task()
+Main Program Loop
+Global Variable Initialization
+python
+Copy code
+tasks = []
+tasks: A global list used to store task dictionaries. Each task dictionary contains the task name and its completion status.
+Function Definitions
+display_tasks() Function
+python
+Copy code
+def display_tasks():
+    if not tasks:
+        print("Your to-do list is empty.")
+    else:
+        print("To-Do List:")
+        for i, task in enumerate(tasks, start=1):
+            status = "Done" if task["completed"] else "Not Done"
+            print(f"{i}. {task['task']} ({status})")
+Purpose: Displays the current to-do list with task numbers, names, and completion statuses.
+Design Choices:
+Uses enumerate to generate task numbers starting from 1.
+Checks if the tasks list is empty to provide appropriate feedback.
+Challenges: Ensuring tasks are displayed in a user-friendly format with clear status indicators.
+add_task(task_name) Function
+python
+Copy code
+def add_task(task_name):
+    task = {"task": task_name, "completed": False}
+    tasks.append(task)
+    print(f"Task '{task_name}' added to your to-do list.")
+Purpose: Adds a new task to the to-do list.
+Design Choices:
+Creates a dictionary for each task with keys task (task name) and completed (completion status).
+Appends the new task dictionary to the tasks list.
+Challenges: Ensuring that tasks are correctly formatted and added to the list.
+mark_completed(task_number) Function
+python
+Copy code
+def mark_completed(task_number):
+    if 1 <= task_number <= len(tasks):
+        tasks[task_number - 1]["completed"] = True
+        print(f"Task {task_number} marked as completed.")
+    else:
+        print("Invalid task number. Please enter a valid task number.")
+Purpose: Marks a specified task as completed.
+Design Choices:
+Validates the task_number to ensure it is within the valid range.
+Updates the completed status of the specified task to True.
+Challenges: Handling invalid task numbers gracefully.
+remove_task(task_number) Function
+python
+Copy code
+def remove_task(task_number):
+    if 1 <= task_number <= len(tasks):
+        removed_task = tasks.pop(task_number - 1)
+        print(f"Task '{removed_task['task']}' removed from your to-do list.")
+    else:
+        print("Invalid task number. Please enter a valid task number.")
+Purpose: Removes a specified task from the to-do list.
+Design Choices:
+Validates the task_number to ensure it is within the valid range.
+Uses the pop method to remove the task and returns the removed task dictionary.
+Challenges: Ensuring tasks are removed correctly and handling invalid task numbers.
+Main Program Loop
+python
+Copy code
+while True:
+    print("\nOptions:")
+    print("1. Display to-do list")
+    print("2. Add a task")
+    print("3. Mark a task as completed")
+    print("4. Remove a task")
+    print("5. Quit")
+    choice = input("Enter your choice: ")
+
+    if choice == '1':
+        display_tasks()
+    elif choice == '2':
+        task_name = input("Enter the task: ")
+        add_task(task_name)
+    elif choice == '3':
+        display_tasks()
+        task_number = int(input("Enter the task number to mark as completed: "))
+        mark_completed(task_number)
+    elif choice == '4':
+        display_tasks()
+        task_number = int(input("Enter the task number to remove: "))
+        remove_task(task_number)
+    elif choice == '5':
+        break
+    else:
+        print("Invalid choice. Please enter a valid option.")
+Purpose: Provides a menu-driven interface for the user to interact with the to-do list application.
+Design Choices:
+Displays a menu with options for displaying tasks, adding tasks, marking tasks as completed, removing tasks, and quitting.
+Uses a while True loop to keep the application running until the user chooses to quit.
+Validates user input to ensure correct options are selected.
+Challenges:
+Providing a seamless user experience by handling invalid inputs and ensuring the menu options work correctly.
+Detailed Explanation of Design Choices
+User Interaction: The menu-driven interface allows users to easily navigate through the available options. Clear prompts and feedback messages guide the user through each action.
+
+Task Management: Tasks are stored as dictionaries to easily track their names and completion statuses. This structure supports efficient task management and updates.
+
+Input Validation: Validating user input for task numbers and menu choices ensures that the application operates smoothly and avoids crashes due to invalid inputs.
+
+Feedback Mechanisms: Providing immediate feedback after each action (e.g., adding a task, marking as completed, removing a task) helps keep the user informed about the current state of the to-do list.
+
+Challenges and Solutions
+Input Validation: Ensuring robust input validation to handle non-numeric and out-of-range inputs was crucial. Solutions included range checks and handling exceptions.
+User Experience: Keeping the user experience smooth and intuitive required careful design of prompts and feedback messages. Balancing detail and clarity was key to maintaining user engagement.
+This documentation covers the key aspects of the to-do list application code, providing an overview of its functionality, design choices, and the challenges encountered during implementation.
